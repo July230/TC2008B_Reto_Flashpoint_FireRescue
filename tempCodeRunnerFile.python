@@ -1,0 +1,181 @@
+# Importamos las clases que se requieren para manejar los agentes (Agent) y su entorno (Model).
+import mesa
+# Cada modelo puede contener múltiples agentes.
+from mesa import Agent, Model
+
+# Debido a que necesitamos que existe un solo agente por celda, elegimos ''SingleGrid''.
+from mesa.space import SingleGrid
+
+# Con ''RandomActivation'', hacemos que todos los agentes se activen ''al mismo tiempo''.
+from mesa.time import RandomActivation
+
+# Haremos uso de ''DataCollector'' para obtener información de cada paso de la simulación.
+from mesa.datacollection import DataCollector
+
+# matplotlib lo usaremos crear una animación de cada uno de los pasos del modelo.
+%matplotlib inline
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+plt.rcParams["animation.html"] = "jshtml"
+matplotlib.rcParams['animation.embed_limit'] = 2**128
+
+# Importamos los siguientes paquetes para el mejor manejo de valores numéricos.
+import numpy as np
+import pandas as pd
+
+# Definimos otros paquetes que vamos a usar para medir el tiempo de ejecución de nuestro algoritmo.
+import time
+import datetime
+
+class FireFighterAgent(Agent):
+    def __init__(self, actionPoints, victim, Model, knockOut):
+        super().__init__(actionPoints, victim, Model, knockOut)
+        self.actionPoints = actionPoints
+        self.victim = victim
+        self.model = Model
+        self.knockOut = knockOut
+        self.memoryVictim = 0  # Recordar si bajó a una víctima, antes de moverse
+
+        # Dictionary for directions with priorities
+        self.directions = {
+            0: {'name': 'up', 'priority': 0.25},    # Up
+            1: {'name': 'left', 'priority': 0.25},  # Left
+            2: {'name': 'down', 'priority': 0.25},  # Down
+            3: {'name': 'right', 'priority': 0.25}  # Right
+        }
+
+    def update_priorities(self):
+        # Example: randomly adjust priorities to simulate dynamic change
+        total_priority = sum(direction['priority'] for direction in self.directions.values())
+        for direction in self.directions.values():
+            direction['priority'] = direction['priority'] * (1 + (0.1 * (random.random() - 0.5)))
+        
+        # Normalize priorities to ensure they sum up to 1
+        new_total = sum(direction['priority'] for direction in self.directions.values())
+        for direction in self.directions.values():
+            direction['priority'] /= new_total
+
+    def choose_direction(self):
+        # Choose direction based on the highest priority
+        return max(self.directions, key=lambda k: self.directions[k]['priority'])
+
+    def step(self, actionFirefighter, coordDirectionAgent, FirePOI, directionAgent):
+        if self.actionPoints <= 0:
+            return  # No action if there are no action points left
+
+        # El agente no puede acabar un turno en fuego
+        if actionFirefighter == 'extinguishFire':
+            self.extinguishFire(FirePOI, coordDirectionAgent)
+        
+        # Update priorities before taking action
+        self.update_priorities()
+
+        if self.victim == 0:
+            if actionFirefighter == 'Move':
+                chosen_direction = self.choose_direction()
+                if self.actionPoints != 1 and FirePOI.get(coordDirectionAgent) != 'F':
+                    self.move(FirePOI, chosen_direction)
+            elif actionFirefighter == "axeWall":
+                self.axeWall(FirePOI, self.model.wall, self.directions[directionAgent]['name'])
+            elif actionFirefighter == 'interactDoor':
+                self.interactDoor(self.model.door, actionFirefighter)
+            elif actionFirefighter == 'leaveVictim':
+                self.leaveVictim(FirePOI)
+            self.actionPoints -= 1
+
+        elif self.victim == 1:
+            if actionFirefighter == 'leaveVictim':
+                self.leaveVictim(FirePOI)
+            elif actionFirefighter == 'Move':
+                chosen_direction = self.choose_direction()
+                if self.actionPoints != 1 and FirePOI.get(coordDirectionAgent) not in ['F', 'S']:
+                    self.move(FirePOI, chosen_direction)
+            elif actionFirefighter in ['extinguishFire', 'axeWall', 'interactDoor'] and self.actionPoints <= 2:
+                self.actionPoints -= 1  # These actions cost more AP
+                self.leaveVictim(FirePOI)
+                self.step(actionFirefighter, coordDirectionAgent, FirePOI, directionAgent)
+                return
+            self.actionPoints -= 1
+
+        neighborhood = self.model.grid.iter_neighborhood(tuple(self.pos), moore=True, include_center=False)
+        for neighbor in neighborhood:
+            if neighbor in self.model.wall_fires:
+                self.extinguishFire(FirePOI, neighbor)
+            else:
+                self.move(FirePOI, neighbor)
+
+    def knockOut(self, exitCoord, victimsLostCount):
+        self.knockOut = 1
+        if self.victim == 1:
+            self.victim = 0
+            victimsLostCount += 1
+        self.coord = None
+        return victimsLostCount
+
+    def move(self, FirePOI, destineCoord):
+        neighbors = self.model.grid.get_neighbors(self.pos, moore=False)
+        for neighbor in neighbors:
+            if neighbor == destineCoord:
+                self.model.grid.move_agent(self, destineCoord)
+                return
+        self.actionPoints += 1  # Penalize if no valid move
+
+    def axeWall(self, FirePOI, Wall, direction):
+        if self.victim == 1:
+            self.victim = 0
+            FirePOI[self.pos] = 'V'
+        Wall.takeDamage(1, direction)
+
+    def leaveVictim(self, FirePOI):
+        if FirePOI.get(self.pos) is None:
+            self.victim = 0
+            self.memoryVictim = 1
+        else:
+            self.actionPoints -= 1
+            print('No se puede poner víctima')
+            return False
+
+    def takeVictim(self, FirePOI):
+        if FirePOI.get(self.pos) == 'V':
+            if self.victim == 0:
+                self.victim = 1
+                print('Recoger víctima')
+            else:
+                self.actionPoints -= 1
+                print('Ya cargas con una víctima')
+                return False
+        else:
+            self.actionPoints -= 1
+            print('Falsa Alarma | No hay una victima aquí')
+            return False
+
+    def interactDoor(self, Door, actionFirefighter):
+        if self.victim == 0:
+            if actionFirefighter == 'openDoor':
+                if Door == 1:  # Closed
+                    self.actionPoints -= 1
+                    Door = 0
+                else:
+                    self.actionPoints += 1
+                    print('Door already open')
+            elif actionFirefighter == 'closeDoor':
+                if Door == 0:  # Open
+                    self.actionPoints -= 1
+                    Door = 1
+                else:
+                    self.actionPoints += 1
+                    print('Door already closed')
+        else:
+            self.leaveVictim(FirePOI)
+
+    def extinguishFire(self, FirePOI, firePos):
+        if FirePOI.get(firePos) == 'F':
+            self.actionPoints -= 1
+            FirePOI[firePos] = 'S'
+        elif FirePOI.get(firePos) == 'S':
+            self.actionPoints -= 1
+            FirePOI[firePos] = None
+        else:
+            self.actionPoints += 1
+            return
