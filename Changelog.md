@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Se puso el dict de direccion (01/09/2024)
 - Agente knockout() le puse entryPoint (02/09/2024)
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
+- Modificar doors dict (02/09/2024)
 
 ## Changed
 
