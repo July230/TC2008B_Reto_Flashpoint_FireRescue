@@ -26,11 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Deprecated
 
+
 ## Removed
+
 
 ## Fixed
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
-
+- DIRECCIONES EN STEP AGENTE
 ## Security
 
 ## [0.0.0] - UNRELEASED
