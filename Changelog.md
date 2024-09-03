@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Agente knockout() le puse entryPoint (02/09/2024)
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
 - Modificar doors dict (02/09/2024)
+- Dijkstra Function para Agente (02/09/2024)
 
 ## Changed
 
