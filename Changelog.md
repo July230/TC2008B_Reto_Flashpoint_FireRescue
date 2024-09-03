@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modificar doors dict (02/09/2024)
 - Dijkstra Function para Agente (02/09/2024)
 - Crear clase door (02/09/2024)
+- Añadir Doors a move() de agente (02/09/2024)
 
 ## Changed
 
