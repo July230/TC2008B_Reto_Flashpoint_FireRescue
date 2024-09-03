@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dijkstra Function para Agente (02/09/2024)
 - Crear clase door (02/09/2024)
 - Añadir move_door() y move_wall() de agente (02/09/2024)
+- Explosiones en el modelo (03/09/2024)
+- Ondas de choque en el modelo (03/09/2024)
+- Destruccion de puertas (03/09/2024)
+- Daño y destruccion de paredes (03/09/2024)
 
 ## Changed
 
@@ -26,13 +30,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Deprecated
 
-
 ## Removed
 
-
 ## Fixed
+
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
 - DIRECCIONES EN STEP AGENTE
+
 ## Security
 
 ## [0.0.0] - UNRELEASED
