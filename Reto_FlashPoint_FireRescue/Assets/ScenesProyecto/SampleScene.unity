@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &77676269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1880961068874244823, guid: 810890cae80cd4f699641eb1cbb5b6b9, type: 3}
+  m_PrefabInstance: {fileID: 839119748524997207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &81603414
 Mesh:
   m_ObjectHideFlags: 0
@@ -2963,7 +2968,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9999341, z: -0, w: 0.011485096}
-  m_LocalPosition: {x: 23.75, y: 1.05, z: -1.338}
+  m_LocalPosition: {x: 18.62, y: 1.05, z: -1.338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5700,6 +5705,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8657789769277629181, guid: 810890cae80cd4f699641eb1cbb5b6b9, type: 3}
   m_PrefabInstance: {fileID: 839119748524997207}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1721000409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77676269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aff28cae9ddc4c948230b611bee5ffc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textJSON: {fileID: 4900000, guid: 0ed32021ba8224c22b507440a2e228ad, type: 3}
+  myFirefighter:
+    id: 0
 --- !u!1 &1760627477
 GameObject:
   m_ObjectHideFlags: 0
@@ -7312,7 +7332,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1880961068874244823, guid: 810890cae80cd4f699641eb1cbb5b6b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1721000409}
   m_SourcePrefab: {fileID: 100100000, guid: 810890cae80cd4f699641eb1cbb5b6b9, type: 3}
 --- !u!1001 &953309374343272350
 PrefabInstance:
