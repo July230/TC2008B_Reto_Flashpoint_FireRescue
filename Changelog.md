@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Se cambio URP por estándar (30/08/2024)
 - Modificar doors dict (02/09/2024)
 - Modificar Dijkstra para que tome en cuenta puertas y paredes (03/09/2024)
-
+- Dijkstra no carga victima y move a fuego al mismo tiempo (03/09/2024)
 ## Deprecated
 
 ## Removed
