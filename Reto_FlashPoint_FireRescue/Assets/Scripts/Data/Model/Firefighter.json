@@ -1,83 +1,76 @@
 {
-    "firefighter" : [
+    "firefighter": [
         {
-            "id" : 1,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 2.0,
-                "y" : 0.0,
-                "z" : 4.0
+            "id": 1,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 6
             }
         },
-
         {
-            "id" : 2,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 7.0,
-                "y" : 0.0,
-                "z" : 2.0
+            "id": 2,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 1
             }
         },
-
         {
-            "id" : 3,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 4.0,
-                "y" : 0.0,
-                "z" : 1.0
+            "id": 3,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 1
             }
         },
-
         {
-            "id" : 4,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 2.0,
-                "y" : 0.0,
-                "z" : 2.0
+            "id": 4,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 6
             }
         },
-
         {
-            "id" : 5,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 2.0,
-                "y" : 0.0,
-                "z" : 1.0
+            "id": 5,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 4
             }
         },
-
         {
-            "id" : 6,
-            "actionPoints" : 4,
-            "victim" : 0,
-            "knockOut" : 0,
-            "carryingVictim" : false,
-            "position" : {
-                "x" : 5.0,
-                "y" : 0.0,
-                "z" : 5.0
+            "id": 6,
+            "actionPoints": 4,
+            "victim": 0,
+            "knockOut": 0,
+            "carryingVictim": false,
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 5
             }
         }
     ]
-    
-
 }

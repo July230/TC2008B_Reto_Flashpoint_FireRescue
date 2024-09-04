@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
+
 
 public class Firefighter : MonoBehaviour
 {
-
-    public TextAsset textJSON;
     public GameObject firefighterPrefab;
-    // public Transform parentTransform;
     public static bool hasSpawned = false;
-    private int count = 0;
+
+    private List<GameObject> firefighters = new List<GameObject>();
+    private FirefighterList myFirefighter = new FirefighterList();
 
     [System.Serializable]
-    public class firefighterInstance
+    public class FirefighterInstance
     {
         public int id;
         public int actionPoints;
@@ -20,7 +22,6 @@ public class Firefighter : MonoBehaviour
         public int knockOut;
         public bool carryingVictim;
         public Coordinates position;
-
     }
 
     [System.Serializable]
@@ -32,40 +33,86 @@ public class Firefighter : MonoBehaviour
     }
 
     [System.Serializable]
-    public class firefighterList
+    public class FirefighterList
     {
-        public firefighterInstance[] firefighter;
+        public FirefighterInstance[] firefighter;
     }
 
-    public firefighterList myFirefighter = new firefighterList();
+
 
     void Start()
     {
-        if (hasSpawned) return;
+        StartCoroutine(FetchData());
+    }
 
-        myFirefighter = JsonUtility.FromJson<firefighterList>(textJSON.text);
-
-        foreach (firefighterInstance fighter in myFirefighter.firefighter)
+    IEnumerator FetchData()
+    {
+        string url = "http://localhost:8585";
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
-            if (count >= 6) break;
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Error fetching data : " + www.error);
+            
+            }
+            else
+            {
+                myFirefighter = JsonUtility.FromJson<FirefighterList>(www.downloadHandler.text);
+                if (!hasSpawned)
+                {
+                    SpawnFighters();
+                    hasSpawned = true;
+                }
+                else
+                {
+                    UpdatePos();
+                }
+            }
+        }
+    }
+
+    void SpawnFighters()
+    {
+        foreach (FirefighterInstance fighter in myFirefighter.firefighter)
+        {
+            if (firefighters.Count >= 6) break;
+
             GameObject newFirefighter = Instantiate(firefighterPrefab);
+            firefighters.Add(newFirefighter);
 
             newFirefighter.transform.position = new Vector3(
                 (2.0f * fighter.position.x) - 1.0f,
                 fighter.position.y,
                 (fighter.position.z * -2.0f) + 1.0f
             );
-
-            count++;
-            
         }
-
-        hasSpawned = true;
-
     }
-        void Update()
+
+    void UpdatePos()
+    {
+        for (int i = 0; i < firefighters.Count; i++)
         {
-        
+            if (i >= myFirefighter.firefighter.Length) break;
+
+            FirefighterInstance fighter = myFirefighter.firefighter[i];
+            GameObject firefighter = firefighters[i];
+
+            firefighter.transform.position = new Vector3(
+                (2.0f * fighter.position.x) - 1.0f,
+                fighter.position.y,
+                (fighter.position.z * -2.0f) + 1.0f
+            );
+        }
+    }
+
+    void Update()
+    {
+        if (hasSpawned)
+        {
+            StartCoroutine(FetchData());
         }
         
+    }
 }
