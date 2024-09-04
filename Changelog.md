@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
+- move_door(), arreglar door tuple para iterar (03/09/2024)
 - DIRECCIONES EN STEP AGENTE
 
 ## Security
