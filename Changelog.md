@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Se arreglo el entryPoints para que fuera array (02/09/2024)
 - move_door(), arreglar door tuple para iterar (03/09/2024)
-- DIRECCIONES EN STEP AGENTE
+- Cuando wall es destroyed, cambiar 1 a 0 en arrayWall en Wall class(03/09/2024)
 
 ## Security
 
