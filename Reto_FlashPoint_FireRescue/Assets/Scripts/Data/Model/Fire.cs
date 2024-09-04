@@ -7,7 +7,9 @@ public class Fire : MonoBehaviour
 
     public TextAsset textJSON;
     public GameObject firePrefab;
+    public Transform parentTransform;
     public static bool hasSpawned = false;
+    private int count = 0;
 
     [System.Serializable]
     public class FireInstance 
@@ -35,22 +37,25 @@ public class Fire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (hasSpawned) return;
+        
         myFire = JsonUtility.FromJson<FireList>(textJSON.text);
-        Coordinates firstPosition = myFire.fire[0].position;
-        Vector3 position = new Vector3(
-            (2.0f * firstPosition.x) - 1.0f, 
-            firstPosition.y, 
-            (firstPosition.z * -2.0f) + 1.0f
-        );
-        
-        if (!hasSpawned)
+
+        foreach (FireInstance fire in myFire.fire)
         {
-            Instantiate(firePrefab, position, Quaternion.identity);
-            hasSpawned = true;  // Set the flag to true to prevent further spawning
+            if (count >= 9) break;
+            GameObject newFire = Instantiate(firePrefab, parentTransform);
+            
+            newFire.transform.position = new Vector3(
+                (2.0f * fire.position.x) - 1.0f,
+                fire.position.y,
+                (fire.position.z * -2.0f) + 1.0f
+            );
+
+            count++;
+
         }
-
-
-        
+            hasSpawned = true;
     }
 
     // Update is called once per frame

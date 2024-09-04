@@ -935,7 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8657789769277629181}
   - component: {fileID: 6284859457312120394}
-  - component: {fileID: -7204576476199661971}
+  - component: {fileID: 442527354536112736}
   m_Layer: 0
   m_Name: Firefighter
   m_TagString: Untagged
@@ -982,7 +982,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-7204576476199661971
+--- !u!114 &442527354536112736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -995,10 +995,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textJSON: {fileID: 4900000, guid: 0ed32021ba8224c22b507440a2e228ad, type: 3}
-  firefighterTransform: {fileID: 8657789769277629181}
-  firefighterTransform2: {fileID: 8657789769277629181}
+  firefighterPrefab: {fileID: 1880961068874244823}
+  parentTransform: {fileID: 0}
   myFirefighter:
-    player: []
+    firefighter: []
 --- !u!1 &1908982902094141433
 GameObject:
   m_ObjectHideFlags: 0

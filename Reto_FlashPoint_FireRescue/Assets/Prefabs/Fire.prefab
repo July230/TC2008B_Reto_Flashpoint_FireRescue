@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textJSON: {fileID: 4900000, guid: 8096bbf2b8ef24c4b935460f4ec27bf9, type: 3}
   firePrefab: {fileID: 282320336911350037}
+  parentTransform: {fileID: 0}
   myFire:
     fire: []
 --- !u!1 &2070185281047031038

@@ -6,22 +6,21 @@ public class Firefighter : MonoBehaviour
 {
 
     public TextAsset textJSON;
-    public Transform firefighterTransform;
-    public Transform firefighterTransform2;
-    public Transform firefighterTransform3;
-    public Transform firefighterTransform4;
-    public Transform firefighterTransform5;
-    public Transform firefighterTransform6;
-
+    public GameObject firefighterPrefab;
+    // public Transform parentTransform;
+    public static bool hasSpawned = false;
+    private int count = 0;
 
     [System.Serializable]
-    public class FirefighterAgent {
+    public class firefighterInstance
+    {
         public int id;
         public int actionPoints;
         public int victim;
         public int knockOut;
         public bool carryingVictim;
         public Coordinates position;
+
     }
 
     [System.Serializable]
@@ -33,28 +32,40 @@ public class Firefighter : MonoBehaviour
     }
 
     [System.Serializable]
-    public class FighterList
+    public class firefighterList
     {
-        public FirefighterAgent[] player;
+        public firefighterInstance[] firefighter;
     }
 
-    public FighterList myFirefighter = new FighterList();
+    public firefighterList myFirefighter = new firefighterList();
 
     void Start()
     {
-        myFirefighter = JsonUtility.FromJson<FighterList>(textJSON.text);
-        Coordinates firstPosition = myFirefighter.player[0].position;
-        Coordinates firstPosition2 = myFirefighter.player[1].position;
-        Coordinates firstPosition3 = myFirefighter.player[2].position;
-        Coordinates firstPosition4 = myFirefighter.player[3].position;
-        Coordinates firstPosition5 = myFirefighter.player[4].position;
-        Coordinates firstPosition6 = myFirefighter.player[5].position;
-        
-        firefighterTransform.position = new Vector3((2.0f * firstPosition.x) - 1.0f, firstPosition.y, (firstPosition.z * -2.0f) + 1.0f);
-        firefighterTransform2.position = new Vector3((2.0f * firstPosition2.x) - 1.0f, firstPosition2.y, (firstPosition2.z * -2.0f) + 1.0f);
-        firefighterTransform3.position = new Vector3((2.0f * firstPosition3.x) - 1.0f, firstPosition3.y, (firstPosition3.z * -2.0f) + 1.0f);
-        firefighterTransform4.position = new Vector3((2.0f * firstPosition4.x) - 1.0f, firstPosition4.y, (firstPosition4.z * -2.0f) + 1.0f);
-        firefighterTransform5.position = new Vector3((2.0f * firstPosition5.x) - 1.0f, firstPosition5.y, (firstPosition5.z * -2.0f) + 1.0f);
-        firefighterTransform6.position = new Vector3((2.0f * firstPosition6.x) - 1.0f, firstPosition6.y, (firstPosition6.z * -2.0f) + 1.0f);
+        if (hasSpawned) return;
+
+        myFirefighter = JsonUtility.FromJson<firefighterList>(textJSON.text);
+
+        foreach (firefighterInstance fighter in myFirefighter.firefighter)
+        {
+            if (count >= 6) break;
+            GameObject newFirefighter = Instantiate(firefighterPrefab);
+
+            newFirefighter.transform.position = new Vector3(
+                (2.0f * fighter.position.x) - 1.0f,
+                fighter.position.y,
+                (fighter.position.z * -2.0f) + 1.0f
+            );
+
+            count++;
+            
+        }
+
+        hasSpawned = true;
+
     }
+        void Update()
+        {
+        
+        }
+        
 }
