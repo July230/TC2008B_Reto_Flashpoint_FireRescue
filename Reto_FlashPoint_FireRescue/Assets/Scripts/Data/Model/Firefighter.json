@@ -7,9 +7,9 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 2,
+                "x": 5,
                 "y": 0,
-                "z": 1
+                "z": 6
             }
         },
         {
@@ -19,7 +19,7 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 1,
+                "x": 6,
                 "y": 0,
                 "z": 1
             }
@@ -31,7 +31,7 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 3,
+                "x": 6,
                 "y": 0,
                 "z": 2
             }
@@ -43,9 +43,9 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 6,
+                "x": 7,
                 "y": 0,
-                "z": 5
+                "z": 2
             }
         },
         {
@@ -55,9 +55,9 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 3,
+                "x": 2,
                 "y": 0,
-                "z": 1
+                "z": 3
             }
         },
         {
@@ -67,9 +67,9 @@
             "knockOut": 0,
             "carryingVictim": false,
             "position": {
-                "x": 8,
+                "x": 5,
                 "y": 0,
-                "z": 2
+                "z": 6
             }
         }
     ]
